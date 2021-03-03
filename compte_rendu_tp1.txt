@@ -1,0 +1,86 @@
+
+
+1)
+mkdir depot_git
+cd depot_git
+mkdir depo1
+cd depo1
+git init
+
+mkdir depot_git;cd depot_git;mkdir depo1;cd depo1;git init
+
+2)
+git config --global user.name "stephanelopez"
+git config --global user.email stephanelopez@etu.unistra.fr
+
+depo1:
+git config --local user.name cercle
+git config --local user.email cercle@email.com
+
+git config --local --list
+
+3)
+mkdir src
+touch src/main.py
+
+mkdir src;touch src/main.py
+
+4)
+linux   : python -O -m py_compile src/main.py
+windows : py -O -m py_compile src/main.py
+
+5)
+Il ne faut pas conserver le fichier executable
+
+6)
+touch .gitignore
+echo "src/__pycache__/" >> .gitignore
+
+
+7)
+
+git add .
+git commit -m "ajout de src/"
+
+8)
+cd .. #sortie du depo1
+
+duplication du depo1:
+git clone C:/Users/sidious/Desktop/depot_git/depo1 depo2
+cd depo2
+
+information depo2:
+git config --local user.name carre
+git config --local user.email carre@email.com
+git config --local --list
+
+9)
+le fichier du dossier __pycache__ n'est pas présent parce que il n'a pas etait ajouter au commit du 1er depot
+
+chemin vers lequel point le depot:
+git remote -v
+il pointe vers le 1er depot
+
+
+10)
+depo1:
+-ajout d'une ligne au fichier main.py dans depo1
+git commit -a -m "ajoute d'une nouvelle ligne a main.py"
+
+depo2:
+git pull origin master #ramene les changements
+-le depot a etait mis a jour et l'historique de commit aussi
+
+
+
+11)
+depo1:
+-suppresion d'une ligne au fichier main.py dans depo1
+git commit -a -m "suppression d'une linge dans main.py"
+
+depo2:
+git pull origin master #ramene les changements
+-le depot a etait mis a jour et l'historique de commit aussi
+
+
+https://uncoded.gitlab.io/GL/fr/scm.html

@@ -1,0 +1,208 @@
+
+INITIALISEZ git:
+
+git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
+
+git config --global credential.helper wincred :
+pour pas demander mot de passe
+
+git remote add unNomLien UrlDuDepot :
+pour pointé(ce conecté) au depot distant
+
+git clone UrlDuDepot :
+copie le contenu du depot sur mon dépot local
+
+
+
+git add . :
+tout ajouter au staging
+
+git commit -m monMessage :
+sauvegarde la contenu de la branche courante
+(si ont change de branch sans faire commit, les changement seront pas sauvegarder lors du retour sur la branch)
+
+------------------------
+EFFECTUER DES REMISE AVEC git stash
+RETITER UN add ET LE GARDER DE COTE:
+
+git stash :
+annule les dernier modification qui ont etait ajouter au staging de la branch courante(vide la staging) et les met de coté dans un tableau stash[] pour etre réutilisé plus tard
+
+get stash save "mon commentaire":
+commet git stash mais  permet de rajouter un commentaire
+
+git stash list :
+list des stash qui on était effectuer(affiche stash[])
+
+git stash apply stash@{indice}:
+applique la remise stash@{indice} sur la branch courante
+
+git stash drop :
+supprime le dernier éléments du tableau stash[]
+
+git stash show stash@{indice} :
+affiche des information(rajouté -p a la fin pour plus de détails)
+
+
+
+git branch:
+visualisé les branch
+
+git branch NomBranch:
+crée une nouvelle branch NomBranch
+la nouvelle branch crée duplique le contenu de la branch courante
+
+git branch -d nom_branch:
+supprime la branch nom_branch
+
+git branch --liste :
+pour afficher la liste des branch (*fichier : branch courante)
+
+----------
+MODIFIER UN COMMIT:
+
+git commit --amend -m "modifier":
+modifie le commentaire du dernier commit
+
+git commit --amend --no-edit:
+La fonction  git --amend, si vous avez bien compris, permet de modifier le dernier commit.
+--no-edit pour pas modifier le commentaire.
+d'abord faire un add du fichier oublier
+
+
+1:40
+______________________________________________
+Corrigez vos erreurs sur votre dépôt distant
+_____________________________________________
+
+
+git revert : annuler son commit public
+
+ajouter une nouvelle clé ssh :
+ssh-keygen -t rsa -b 4096 -C "anakin@skywalker.com"
+
+______________________________________________
+Utilisez Git reset
+______________________________________________
+
+
+git reset:
+annule le staging courant
+
+git reset HEAD^ : annule le dernier commit et staging mais le working directory reste le même
+
+git reset notreCommitCible : annule le commit commitCible et staging mais le working directory reste le même
+
+----
+
+git reset --hard :
+annule le staging et le working directory courant
+retourne dans l'état juste après le dernier commit
+
+
+git reset notreCommitCible  --hard :
+Cette commande va permettre de revenir à n'importe quel commit mais en oubliant absolument tout ce qu'il s'est passé après
+
+
+----
+
+git reset --soft : retourne au staging
+
+-----
+
+git reset --mixed : pareil que git reset je crois
+
+--
+git revert HEAD : pour annulé le dernier commit, il sera remplacer par une nouveau commit
+
+______________________________________________
+Corrigez un commit raté
+______________________________________________
+
+git reflog : afficher le SHA des commits
+
+git checkout nomCommit : retourné sur le commit nomCommit
+
+git blame monfichier : affiche pour chaque ligne modifiée, son ID, l'auteur, l'horodatage, le numéro de la ligne et le contenu de la ligne.
+
+git cherry-pick SHA1 SHA2 ... SHAn :
+permet de sélectionner un ou plusieurs commits grâce à leurs SHA et de les migrer sur la branche master, sans pour autant fusionner toute la branche "branche_courante"(basculer dans la branche master avant de lancer la commande)
+
+__________________________________________
+Identifiez la structure de fichier de Git
+__________________________________________
+
+git merge LaBranch :
+fusionne la branche LaBranch avec la branch courante
+
+git pull <remote> <branch> :
+tire depuis le dépot central sur mon dépot local a la branch <branch> et fusionne(git merge <remote>/master)
+(git pull = git fetch + git merge <remote>/master)
+
+git push <remote> <branch> :
+pousse le contenu de la branch <branch> sur le dépot central <remote>
+
+git fetch <remote> <branch> : 
+tire depuis le dépot centre sur mon dépot local sans fusionner(git merge <remote>/master)
+
+_________________________________________________
+Modifiez vos branches avec Rebase
+_________________________________________________
+
+Le rebase permet de garder un historique plus clair et plus compréhensible.
+
+Le rebasage interactif permet ainsi de maintenir la propreté et la cohérence de l'historique d'un projet.
+
+https://openclassrooms.com/fr/courses/5641721-utilisez-git-et-github-pour-vos-projets-de-developpement/6113081-modifiez-vos-branches-avec-rebase
+
+https://git-scm.com/book/fr/v2/Les-branches-avec-Git-Rebaser-Rebasing
+
+___________________________________________
+Utilisez des techniques de nettoyage de branche
+___________________________________________
+
+https://openclassrooms.com/fr/courses/5641721-utilisez-git-et-github-pour-vos-projets-de-developpement/6113086-utilisez-des-techniques-de-nettoyage-de-branche
+
+git rebase <branch> :
+place les commits de la branche courante sur la branche <branch>, ensuite ce déplacé sur la branche <branch> et faire un merge
+(rebase --continue)
+
+
+git rebase --continue :
+permet de finir le rebasage
+
+
+git rebase -i :
+rebasage interactif, permet de manipuler l'historique des commit
+
+git branch -d brancheTest :
+suprimmer la branche brancheTest
+
+git bisect start commitBUG commitPasBug :
+permet de chercher un bug entre deux commits,
+si le commit ne présente pas le bug alors taper(git bisect good ) sinon taper(git bisect bad )
+
+
+____________________________________________
+Intégrez les dépôts d’autres personnes dans le vôtre
+_____________________________________________
+
+
+git submodule add https://github.com/etudiantOC/ProjetSubModule dossier/destination :
+Cette commande va ajouter à notre dépôt courant le projet ProjetSubModule, comme sous-module dans le dossier Dossier/Destination.
+
+
+git subtree push -P monRépertoire git@mon-serveur-git:group/projet.git master  :
+Git subtree va vous permettre de créer un nouvel arbre de commits pour un sous-dossier de votre dépôt Git. Autrement dit, Git subtree régénère l’historique d’un dossier.
+Votre répertoire va être pushé sur votre nouveau dépôt distant sur la branche master
+
+
+
+
+______________________________________________________
+Travaillez en équipe en utilisant un workflow
+______________________________________________________
+
+
+Git met l’accent sur la flexibilité

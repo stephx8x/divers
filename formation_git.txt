@@ -1,0 +1,226 @@
+_________________________________________
+Comprendre Git (5/18) : Premiers commits
+_________________________________________
+
+crée un fichier .gitignore :
+cela permet de mettre dans ce fichier sur chaque lignes les fichiers que l'on veut ignoré
+
+git init:
+démarrer un nouveau projet git
+
+git add . :
+ajouté les les fichier au staging
+
+git commit -m commentaire :
+commit les fichier du staging
+
+git log --online:
+affiche l'historique des commit sur une seul ligne
+
+git log -p <fichier> :
+-p pour indiquer le chemin que l'on veut observer
+
+git log --graph --oneline :
+affiche le graphe des commits
+
+git diff :
+montre tout les fichier qui on était modifier le dernier commit
+
+_______________________________________________
+Comprendre Git (6/18) : Revenir en arrière
+_______________________________________________
+
+git checkout id_du_commit :
+permet de revenir sur un commit en tant que spectateur
+
+git checkout id_du_commit nomFichier:
+permet de revenir sur un fichier datant du commit id_du_commit en tant que spectateur
+
+https://www.youtube.com/watch?v=ZY5A7kUR0S4&list=PLjwdMgw5TTLXuY5i7RW0QqGdW0NZntqiP&index=6
+
+_________________________________________________
+Comprendre Git (7/18) : Les branches
+_________________________________________________
+
+
+git branch :
+Permet de lister les  branches
+
+git branch <branche> :
+Permet de créer une nouvelle branche <branche>
+
+git branch -m <branche> :
+Renomme la branche courante en <branche>
+
+git branch -d <branche> :
+Permet de supprimer une branche
+
+git branch -D <branche>:
+Supprime la branche même si elle n'a pas été fusionnée
+
+git branch -r :
+afficher la liste de branch du remote
+
+
+git checkout <branche>:
+changer de branche
+
+git merge <branche>:
+fusioner la branche courante avec la branche <branche>
+
+__________________________________________________
+Comprendre Git (8/18) : Manipuler l'historique
+__________________________________________________
+
+git commit --amend :
+L'argument --amend permet de rajouter les fichier en staging dans le commit précédent. Ceci permet de corriger un oubli et d'éviter de faire 10 commits pour la même chose.
+
+git rebase <branch> :
+place les commits de la branche courante sur la branche <branch>, ensuite ce déplacé sur la branche <branch> et faire un merge
+(rebase --continue)
+
+
+git rebase --continue :
+permet de finir le rebasage
+_________________________________________________
+Comprendre Git (9/18) : Le remisage
+_________________________________________________
+
+git stash :
+annule les dernier modification qui ont etait ajouter au staging de la branch courante(vide la staging) et les met de coté dans un tableau stash[] pour etre réutilisé plus tard
+
+
+get stash save "mon commentaire":
+commet git stash mais  permet de rajouter un commentaire
+
+git stash list :
+list des stash qui on était effectuer(affiche stash[])
+
+git stash apply stash@{indice}:
+applique la remise stash@{indice} sur la branch courante
+
+git stash drop :
+supprime le dernier éléments du tableau stash[]
+
+git stash show stash@{indice} :
+affiche des information(rajouté -p a la fin pour plus de détails)
+
+
+___________________________________________________
+Comprendre Git (10/18) : Remote
+___________________________________________________
+
+git init --bare :
+permet de préciser que ce dossier ne contiendra pas de dossier de travail mais seulement l'historique de notre projet
+
+
+git remote :
+Liste les dépôts distants
+
+git remote -v :
+Liste les dépôts distants et les chemins associés
+
+git remote add <alias> <chemin/url> :
+Ajoute un nouveau dépôt distant
+
+git remote rm <alias> : 
+Supprimé un dépôt distant
+
+git remote rename <old> <new>:
+renommer un remote
+
+
+
+git push <remote> <branche> :
+pousse la branche sur le remote distant
+
+git push <remote> --all :
+Permet d'envoyer toutes les branches
+
+git push <remote> --delete <branch> :
+supprime la branche <branch> du remote distant
+
+
+
+git fetch <remote> : 
+Récupère toutes les branches et tous les commits 
+
+git fetch <remote> <branche> :
+récuper une branche particulier
+
+git pull =
+git fetch origin master 
+git merge origin/master
+
+
+git pull <remote> :
+permet de faire un git fetch suivi d'un git merge en une seule commande.
+
+git pull <remote> <branche>:
+pareil que pull mais avec un branch spécifique
+
+git pull --rebase <remote>:
+pour faire un rebase automatique lors du pull
+
+git clone <remote> :
+récuper tout un dépot distant
+
+______________________________________
+Comprendre Git (11/18) : Fork & Pull request
+______________________________________
+
+ssh-keygen -t rsa "email du remote" :
+crée une clé ssh pour le dépot distant, l'intéret et de ne pas avoir besoin de taper le mot de passe a chaque push et pull
+
+____________________________________________
+Comprendre Git (12/18) : Git Flow
+____________________________________________
+http://danielkummer.github.io/git-flow-cheatsheet/index.fr_FR.html
+
+git flow init : 
+initialisé un projet git flow
+
+
+git flow feature start <nom_feature> :
+pour commencer le développement d'une nouvelle fonctionnalité.
+Cette commande crée une nouvelle branche de fonctionnalité basée sur 'develop' et passe sur cette branche
+
+git flow feature finish <nom_feature> :
+fusionne la branch feature avec le branch develop et supprime la branch feature.
+(a utilisé lorsque l'on a fini)
+
+git flow feature publish <nom_feature> :
+fait un push sur depot distant
+
+git flow feature pull origin MYFEATURE : 
+Récupérer une fonctionnalité publiée par un autre utilisateur
+
+git flow feature track MYFEATURE :
+Vous pouvez suivre une fonctionnalité sur le serveur distant en utilisant
+
+
+
+LIVRAISON/RELEASE
+
+pour publier les modifification
+
+git flow release start RELEASE [BASE] : 
+Créer une branche de livraison basée sur la branche de développement.(base correspond au hash d'un commit à partir duquel commencera la livraison. Ce commit doit faire partie de la branche de développement.)
+
+git flow release publish RELEASE : 
+publier une release
+
+git flow release finish RELEASE :
+terminer livraison
+
+git push --tags : 
+pousser les tags après le finish
+
+
+CORRECTIFS/HOTFIX
+
+permet de corriger
+
+git flow hotfix start VERSION [BASE]
+
+git flow hotfix finish VERSION
